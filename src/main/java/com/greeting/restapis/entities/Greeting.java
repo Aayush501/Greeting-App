@@ -4,7 +4,7 @@ public class Greeting {
     private String message;
     private int statusCode;
 
-    public Greeting(String message, int statusCode) {
+    public Greeting (String message, int statusCode) {
         this.message = message;
         this.statusCode = statusCode;
     }

@@ -1,29 +1,41 @@
 package com.greeting.restapis.controllers;
 
 import com.greeting.restapis.entities.Greeting;
+import com.greeting.restapis.sevices.GreetingServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/greeting")
+@RequestMapping("/greeting") // Base URL for all endpoints
 public class GreetingController {
 
+    private final GreetingServices greetingService;
+
+    public GreetingController(GreetingServices greetingService) {
+        this.greetingService = greetingService;
+    }
+
+    // Handles GET requests
     @GetMapping
     public Greeting getGreeting() {
-        return new Greeting("Hello Aayush Kumar, this is a GET request!", HttpStatus.OK.value());
+        return new Greeting(greetingService.getGreetingMessage(), HttpStatus.OK.value());
     }
 
+    // Handles POST requests
     @PostMapping
     public Greeting postGreeting() {
-        return new Greeting("Hello Aayush Kumar, this is a POST request!", HttpStatus.CREATED.value());
+        return new Greeting(greetingService.postGreetingMessage(), HttpStatus.CREATED.value());
     }
 
+    // Handles PUT requests
     @PutMapping
     public Greeting putGreeting() {
-        return new Greeting("Hello Aayush Kumar, this is a PUT request!", HttpStatus.OK.value());
+        return new Greeting(greetingService.putGreetingMessage(), HttpStatus.OK.value());
     }
 
+    // Handles DELETE requests
     @DeleteMapping
     public Greeting deleteGreeting() {
-        return new Greeting("Hello Aayush Kumar, this is a DELETE request!", HttpStatus.NO_CONTENT.value());
+        return new Greeting(greetingService.deleteGreetingMessage(), HttpStatus.NO_CONTENT.value());
     }
 }
