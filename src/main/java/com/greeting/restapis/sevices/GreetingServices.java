@@ -1,55 +1,30 @@
 package com.greeting.restapis.sevices;
 
-import com.greeting.restapis.entities.GreetingMessage;
-import com.greeting.restapis.entities.GreetingRequest;
-import com.greeting.restapis.entities.GreetingResponse;
+import com.greeting.restapis.dto.UserDTO;
+import com.greeting.restapis.entities.Greeting;
 import com.greeting.restapis.repository.GreetingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-// Service layer to handle business logic
 @Service
 public class GreetingServices {
-    private final GreetingRepository greetingRepository;
+    private static final String template = "Hello, %s!";
 
-    // Constructor-based Dependency Injection
-    public GreetingServices(GreetingRepository greetingRepository) {
-        this.greetingRepository = greetingRepository;
-    }
+    @Autowired
+    private GreetingRepository greetingRepository;
 
-    // Generate and Save Greeting Message
-    public GreetingResponse generateAndSaveGreeting(GreetingRequest request) {
-        String message;
-
-        if (request.getFirstName() != null && request.getLastName() != null) {
-            message = "Hello, " + request.getFirstName() + " " + request.getLastName() + "!";
-        } else if (request.getFirstName() != null) {
-            message = "Hello, " + request.getFirstName() + "!";
-        } else if (request.getLastName() != null) {
-            message = "Hello, " + request.getLastName() + "!";
+    public Greeting getGreeting(UserDTO userDTO) {
+        String name;
+        if (userDTO.getFirstName() != null && userDTO.getLastName() != null) {
+            name = userDTO.getFirstName() + " " + userDTO.getLastName();
+        } else if (userDTO.getFirstName() != null) {
+            name = userDTO.getFirstName();
+        } else if (userDTO.getLastName() != null) {
+            name = userDTO.getLastName();
         } else {
-            message = "Hello, World!";
+            name = "World";
         }
-
-        // Save message in the database
-        GreetingMessage greetingMessage = new GreetingMessage(message);
-        greetingRepository.save(greetingMessage);
-
-        return new GreetingResponse(message,201);
-    }
-
-    // Retrieve All Saved Messages
-    public List<GreetingMessage> getAllGreetings() {
-        return greetingRepository.findAll();
-    }
-    // Put Method to  update the data
-    public String putGreetingMessage() {
-        return "Hello Aayush Kumar, this is a PUT request!";
-    }
-
-    // Delete method to delete the data
-    public String deleteGreetingMessage() {
-        return "Hello Aayush Kumar, this is a DELETE request!";
+        Greeting greeting = new Greeting(String.format(template, name));
+        return greetingRepository.save(greeting);
     }
 }

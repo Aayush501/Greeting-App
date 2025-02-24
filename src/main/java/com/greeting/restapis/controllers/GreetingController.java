@@ -1,46 +1,26 @@
 package com.greeting.restapis.controllers;
 
-import com.greeting.restapis.entities.GreetingMessage;
-import com.greeting.restapis.entities.GreetingRequest;
-import com.greeting.restapis.entities.GreetingResponse;
+import com.greeting.restapis.dto.UserDTO;
+import com.greeting.restapis.entities.Greeting;
+
 import com.greeting.restapis.sevices.GreetingServices;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/greeting") // Base URL for all endpoints
+@RequestMapping("/greeting")
 public class GreetingController {
 
+    @Autowired
+    private GreetingServices greetingService;
 
-    private final GreetingServices greetingService;
-
-    public GreetingController(GreetingServices greetingService) {
-        this.greetingService = greetingService;
-    }
-
-    // Create and Save Greeting
-    @PostMapping
-    public GreetingResponse createGreeting(@RequestBody GreetingRequest request) {
-        return greetingService.generateAndSaveGreeting(request);
-    }
-
-    // Fetch All Saved Greetings
-    @GetMapping("/all")
-    public List<GreetingMessage> getAllGreetings() {
-        return greetingService.getAllGreetings();
-    }
-
-    // Handles PUT requests
-    @PutMapping
-    public GreetingResponse putGreeting() {
-        return new GreetingResponse(greetingService.putGreetingMessage(), HttpStatus.OK.value());
-    }
-
-    // Handles DELETE requests
-    @DeleteMapping
-    public GreetingResponse deleteGreeting() {
-        return new GreetingResponse(greetingService.deleteGreetingMessage(), HttpStatus.NO_CONTENT.value());
+    // Handles GET requests to /greeting
+    @GetMapping
+    public Greeting getGreeting(@RequestParam(required = false) String firstName,
+                                @RequestParam(required = false) String lastName) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName(firstName);
+        userDTO.setLastName(lastName);
+        return greetingService.getGreeting(userDTO);
     }
 }
