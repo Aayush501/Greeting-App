@@ -1,10 +1,10 @@
 package com.greeting.restapis.entities;
 
-public class Greeting {
+public class GreetingResponse {
     private String message;
     private int statusCode;
 
-    public Greeting (String message, int statusCode) {
+    public GreetingResponse(String message, int statusCode) {
         this.message = message;
         this.statusCode = statusCode;
     }

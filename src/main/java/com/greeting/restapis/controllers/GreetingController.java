@@ -1,6 +1,7 @@
 package com.greeting.restapis.controllers;
 
-import com.greeting.restapis.entities.Greeting;
+import com.greeting.restapis.entities.GreetingRequest;
+import com.greeting.restapis.entities.GreetingResponse;
 import com.greeting.restapis.sevices.GreetingServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,27 +16,28 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    // Handles GET requests
+    // Handle GET requests (Default Greeting)
     @GetMapping
-    public Greeting getGreeting() {
-        return new Greeting(greetingService.getGreetingMessage(), HttpStatus.OK.value());
+    public GreetingResponse getDefaultGreeting() {
+        return new GreetingResponse(greetingService.getGreetingMessage(null, null), 200);
     }
 
-    // Handles POST requests
+    // Handle POST requests (Personalized Greeting)
     @PostMapping
-    public Greeting postGreeting() {
-        return new Greeting(greetingService.postGreetingMessage(), HttpStatus.CREATED.value());
+    public GreetingResponse createGreeting(@RequestBody GreetingRequest request) {
+        String message = greetingService.getGreetingMessage(request.getFirstName(), request.getLastName());
+        return new GreetingResponse(message, 201);
     }
 
     // Handles PUT requests
     @PutMapping
-    public Greeting putGreeting() {
-        return new Greeting(greetingService.putGreetingMessage(), HttpStatus.OK.value());
+    public GreetingResponse putGreeting() {
+        return new GreetingResponse(greetingService.putGreetingMessage(), HttpStatus.OK.value());
     }
 
     // Handles DELETE requests
     @DeleteMapping
-    public Greeting deleteGreeting() {
-        return new Greeting(greetingService.deleteGreetingMessage(), HttpStatus.NO_CONTENT.value());
+    public GreetingResponse deleteGreeting() {
+        return new GreetingResponse(greetingService.deleteGreetingMessage(), HttpStatus.NO_CONTENT.value());
     }
 }
