@@ -1,4 +1,4 @@
-package com.greeting.restapis.entities;
+package com.greeting.restapis.dto;
 
 public class GreetingResponse {
     private String message;

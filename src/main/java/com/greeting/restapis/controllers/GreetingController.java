@@ -1,7 +1,7 @@
 package com.greeting.restapis.controllers;
 
-import com.greeting.restapis.entities.GreetingRequest;
-import com.greeting.restapis.entities.GreetingResponse;
+import com.greeting.restapis.dto.GreetingRequest;
+import com.greeting.restapis.dto.GreetingResponse;
 import com.greeting.restapis.sevices.GreetingServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
