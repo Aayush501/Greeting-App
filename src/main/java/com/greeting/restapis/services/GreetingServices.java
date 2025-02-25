@@ -1,4 +1,4 @@
-package com.greeting.restapis.sevices;
+package com.greeting.restapis.services;
 
 import com.greeting.restapis.dto.UserDTO;
 import com.greeting.restapis.entities.Greeting;
@@ -37,5 +37,17 @@ public class GreetingServices {
     }
     public List<Greeting> getAllGreetings() {
         return greetingRepository.findAll();
+    }
+
+    public Greeting editGreeting(String content, Greeting updatedGreeting) {
+        Optional<Greeting> existingGreeting = greetingRepository.findByContentLikeIgnoreCase(content);
+        if (existingGreeting.isPresent()) {
+            Greeting greeting = existingGreeting.get();
+            greeting.setContent(updatedGreeting.getContent());
+            greetingRepository.save(greeting);
+            return greeting;
+        } else {
+            return null; // Or throw an exception if preferred
+        }
     }
 }

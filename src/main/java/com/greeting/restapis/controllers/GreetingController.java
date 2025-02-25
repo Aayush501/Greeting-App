@@ -2,7 +2,7 @@ package com.greeting.restapis.controllers;
 
 import com.greeting.restapis.dto.UserDTO;
 import com.greeting.restapis.entities.Greeting;
-import com.greeting.restapis.sevices.GreetingServices;
+import com.greeting.restapis.services.GreetingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +34,10 @@ public class GreetingController {
     @GetMapping("/all")
     public List<Greeting> getAllGreetings() {
         return greetingService.getAllGreetings();
+    }
+
+    @PutMapping("/update/{content}")
+    public Greeting editGreeting(@PathVariable String content, @RequestBody Greeting greeting) {
+        return greetingService.editGreeting(content, greeting);
     }
 }
