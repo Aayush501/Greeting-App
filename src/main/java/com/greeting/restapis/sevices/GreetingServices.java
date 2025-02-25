@@ -27,7 +27,9 @@ public class GreetingServices {
         } else {
             name = "World";
         }
-        return new Greeting(String.format(template, name));
+        Greeting newGreeting = new Greeting(String.format(template, name));
+        greetingRepository.save(newGreeting);
+        return newGreeting;
     }
     public Greeting getGreetingById(Long id) {
         Optional<Greeting> greeting = greetingRepository.findById(id);
