@@ -2,7 +2,6 @@ package com.greeting.restapis.controllers;
 
 import com.greeting.restapis.dto.UserDTO;
 import com.greeting.restapis.entities.Greeting;
-
 import com.greeting.restapis.sevices.GreetingServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,5 +21,11 @@ public class GreetingController {
         userDTO.setFirstName(firstName);
         userDTO.setLastName(lastName);
         return greetingService.getGreeting(userDTO);
+    }
+
+    // Handles GET requests to /greeting/{id}
+    @GetMapping("/{id}")
+    public Greeting getGreetingById(@PathVariable Long id) {
+        return greetingService.getGreetingById(id);
     }
 }

@@ -6,6 +6,8 @@ import com.greeting.restapis.repository.GreetingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GreetingServices {
     private static final String template = "Hello, %s!";
@@ -24,7 +26,10 @@ public class GreetingServices {
         } else {
             name = "World";
         }
-        Greeting greeting = new Greeting(String.format(template, name));
-        return greetingRepository.save(greeting);
+        return new Greeting(String.format(template, name));
+    }
+    public Greeting getGreetingById(Long id) {
+        Optional<Greeting> greeting = greetingRepository.findById(id);
+        return greeting.orElse(null); // Return the greeting if found, otherwise return null
     }
 }
