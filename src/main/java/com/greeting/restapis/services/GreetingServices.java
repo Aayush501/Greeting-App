@@ -5,6 +5,7 @@ import com.greeting.restapis.entities.Greeting;
 import com.greeting.restapis.repository.GreetingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,5 +50,11 @@ public class GreetingServices {
         } else {
             return null; // Or throw an exception if preferred
         }
+    }
+
+    @Transactional
+    public List<Greeting> deleteOne(String content) {
+        greetingRepository.deleteByContentLikeIgnoreCase(content);
+        return getAllGreetings();
     }
 }

@@ -40,4 +40,9 @@ public class GreetingController {
     public Greeting editGreeting(@PathVariable String content, @RequestBody Greeting greeting) {
         return greetingService.editGreeting(content, greeting);
     }
+
+    @DeleteMapping("/delete/{content}")
+    public List<Greeting> deleteGreeting(@PathVariable String content) {
+        return greetingService.deleteOne(content);
+    }
 }

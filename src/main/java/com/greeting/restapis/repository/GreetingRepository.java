@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface GreetingRepository extends JpaRepository<Greeting, Long> {
     Optional<Greeting> findByContentLikeIgnoreCase(@NonNull String content);
+
+    void deleteByContentLikeIgnoreCase(@NonNull String content);
 }
